@@ -14,20 +14,20 @@ import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
 @Composable
-fun <UiEffect> CollectUiEffect(
-    uiEffect: Flow<UiEffect>,
+fun <SideEffect> CollectSideEffect(
+    sideEffect: Flow<SideEffect>,
     lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current,
     minActiveState: Lifecycle.State = Lifecycle.State.STARTED,
     context: CoroutineContext = Dispatchers.Main.immediate,
-    onEffect: suspend CoroutineScope.(effect: UiEffect) -> Unit,
+    onSideEffect: suspend CoroutineScope.(effect: SideEffect) -> Unit,
 ) {
-    LaunchedEffect(uiEffect, lifecycleOwner) {
+    LaunchedEffect(sideEffect, lifecycleOwner) {
         lifecycleOwner.lifecycle.repeatOnLifecycle(minActiveState) {
             if (context == EmptyCoroutineContext) {
-                uiEffect.collect { onEffect(it) }
+                sideEffect.collect { onSideEffect(it) }
             } else {
                 withContext(context) {
-                    uiEffect.collect { onEffect(it) }
+                    sideEffect.collect { onSideEffect(it) }
                 }
             }
         }

@@ -17,8 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.pinkbang.mvi.ui.HomeContract.SideEffect
 import com.pinkbang.mvi.ui.HomeContract.UiAction
-import com.pinkbang.mvi.ui.HomeContract.UiEffect
 import com.pinkbang.mvi.ui.HomeContract.UiState
 import kotlinx.coroutines.flow.Flow
 
@@ -27,22 +27,22 @@ fun HomeScreen() {
     val vm = remember { HomeViewModel() }
 
     val uiState by vm.uiState.collectAsState()
-    val uiEffect = vm.uiEffect
+    val sideEffect = vm.sideEffect
     val onAction = vm::onAction
-    HomeScreen(uiState, uiEffect, onAction)
+    HomeScreen(uiState, sideEffect, onAction)
 }
 
 @Composable
 fun HomeScreen(
     uiState: UiState,
-    uiEffect: Flow<UiEffect>,
+    sideEffect: Flow<SideEffect>,
     onAction: (UiAction) -> Unit,
 ) {
     val context = LocalContext.current
 
-    CollectUiEffect(uiEffect) {
+    CollectSideEffect(sideEffect) {
         when (it) {
-            UiEffect.ShowCountCanNotBeNegativeToast -> {
+            SideEffect.ShowCountCanNotBeNegativeToast -> {
                 Toast.makeText(context, "Count can't be less than 0", Toast.LENGTH_SHORT).show()
             }
         }

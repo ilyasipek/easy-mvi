@@ -10,7 +10,7 @@ interface HomeContract {
         object OnDecreaseCountClick : UiAction
     }
 
-    sealed interface UiEffect {
-        object ShowCountCanNotBeNegativeToast : UiEffect
+    sealed interface SideEffect {
+        object ShowCountCanNotBeNegativeToast : SideEffect
     }
 }
