@@ -1,6 +1,5 @@
 package com.pinkbang.mvi
 
-import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -14,21 +13,21 @@ import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
-@SuppressLint("ComposableNaming")
 @Composable
-fun <UiEffect> Flow<UiEffect>.collectAsUiEffectWithLifecycle(
+fun <UiEffect> CollectUiEffect(
+    uiEffect: Flow<UiEffect>,
     lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current,
     minActiveState: Lifecycle.State = Lifecycle.State.STARTED,
     context: CoroutineContext = Dispatchers.Main.immediate,
-    block: suspend CoroutineScope.(effect: UiEffect) -> Unit,
+    onEffect: suspend CoroutineScope.(effect: UiEffect) -> Unit,
 ) {
-    LaunchedEffect(this, lifecycleOwner) {
+    LaunchedEffect(uiEffect, lifecycleOwner) {
         lifecycleOwner.lifecycle.repeatOnLifecycle(minActiveState) {
             if (context == EmptyCoroutineContext) {
-                this@collectAsUiEffectWithLifecycle.collect { block(it) }
+                uiEffect.collect { onEffect(it) }
             } else {
                 withContext(context) {
-                    this@collectAsUiEffectWithLifecycle.collect { block(it) }
+                    uiEffect.collect { onEffect(it) }
                 }
             }
         }

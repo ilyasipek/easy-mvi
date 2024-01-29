@@ -40,7 +40,7 @@ fun HomeScreen(
 ) {
     val context = LocalContext.current
 
-    uiEffect.collectAsUiEffectWithLifecycle {
+    CollectUiEffect(uiEffect) {
         when (it) {
             UiEffect.ShowCountCanNotBeNegativeToast -> {
                 Toast.makeText(context, "Count can't be less than 0", Toast.LENGTH_SHORT).show()
