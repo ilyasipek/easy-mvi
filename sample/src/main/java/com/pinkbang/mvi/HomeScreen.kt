@@ -10,8 +10,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,9 +24,15 @@ import kotlinx.coroutines.flow.Flow
 fun HomeScreen() {
     val vm = remember { HomeViewModel() }
 
+    /*
+    Use this instead of the unpack function if you want
+
     val uiState by vm.uiState.collectAsState()
     val sideEffect = vm.sideEffect
     val onAction = vm::onAction
+    */
+
+    val (uiState, onAction, sideEffect) = vm.unpack()
     HomeScreen(uiState, sideEffect, onAction)
 }
 

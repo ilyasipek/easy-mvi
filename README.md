@@ -72,6 +72,10 @@ fun HomeScreen() {
     val uiState by vm.uiState.collectAsState()
     val sideEffect = vm.sideEffect
     val onAction = vm::onAction
+
+    // or use the unpack function
+    val (uiState, onAction, sideEffect) = vm.unpack()
+
     HomeScreen(uiState, sideEffect, onAction)
 }
 
