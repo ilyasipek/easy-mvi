@@ -9,6 +9,9 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface MVI<UiState, UiAction, SideEffect> {
     val uiState: StateFlow<UiState>
+
+    val currentUiState: UiState
+
     val sideEffect: Flow<SideEffect>
 
     fun onAction(uiAction: UiAction)

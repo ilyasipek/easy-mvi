@@ -20,7 +20,7 @@ class HomeViewModel : ViewModel(), MVI<UiState, UiAction, SideEffect> by mvi(ini
     }
 
     private fun onDecreaseCountClick() {
-        if (uiState.value.count > 0) {
+        if (currentUiState.count > 0) {
             updateUiState { copy(count = count - 1) }
         } else {
             viewModelScope.emitSideEffect(SideEffect.ShowCountCanNotBeNegativeToast)
