@@ -50,7 +50,7 @@ class HomeViewModel : ViewModel(), MVI<UiState, UiAction, SideEffect> by mvi(ini
     }
 
     private fun onDecreaseCountClick() {
-        if (uiState.value.count > 0) {
+        if (currentUiState.count > 0) { // currentUiState is a shortcut for uiState.value 
             updateUiState { copy(count = count - 1) }
         } else {
             // here is how to emit side effect
